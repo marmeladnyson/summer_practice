@@ -1,4 +1,4 @@
-const state = { userId: localStorage.getItem("notes-user-id") };
+const state = { userId: localStorage.getItem("notes-user-id"), page: 1, pageSize: 10, total: 0 };
 const $ = (id) => document.getElementById(id);
 
 function showMessage(text, error = false) {
@@ -23,10 +23,20 @@ function renderUser() {
 
 async function loadNotes() {
   const filter = $("filter").value;
-  const query = filter === "" ? "" : `?status_filter=${filter}`;
+  const params = new URLSearchParams({ skip: String((state.page - 1) * state.pageSize), limit: String(state.pageSize) });
+  if (filter !== "") params.set("status_filter", filter);
   try {
-    const data = await request(`/notes${query}`);
+    const data = await request(`/notes?${params}`);
+    state.total = data.total;
+    const totalPages = Math.max(1, Math.ceil(state.total / state.pageSize));
+    if (state.page > totalPages) {
+      state.page = totalPages;
+      return loadNotes();
+    }
     $("count").textContent = data.total;
+    $("page-info").textContent = `Страница ${state.page} из ${totalPages}`;
+    $("previous-page").disabled = state.page === 1;
+    $("next-page").disabled = state.page === totalPages;
     $("notes").innerHTML = data.items.length ? data.items.map((note) => `
       <article class="note ${note.status ? "done" : ""}">
         <div class="note-title">${escapeHtml(note.title)}</div>
@@ -65,6 +75,18 @@ $("note-form").addEventListener("submit", async (event) => {
 });
 
 $("filter").addEventListener("change", loadNotes);
+$("previous-page").addEventListener("click", () => {
+  if (state.page > 1) {
+    state.page -= 1;
+    loadNotes();
+  }
+});
+$("next-page").addEventListener("click", () => {
+  if (state.page < Math.ceil(state.total / state.pageSize)) {
+    state.page += 1;
+    loadNotes();
+  }
+});
 $("notes").addEventListener("click", async (event) => {
   const button = event.target.closest("button");
   if (!button) return;

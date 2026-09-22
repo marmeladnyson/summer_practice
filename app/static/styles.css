@@ -25,6 +25,9 @@ button:hover { background: #555; }
 .note-actions button { padding: 7px 9px; font-size: 13px; }
 .note-actions .delete { background: #fff; color: #333; }
 .empty { padding: 16px 0; color: #666; }
+.pagination { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 18px; }
+.pagination button:disabled { cursor: default; opacity: .45; }
+.pagination span { min-width: 90px; text-align: center; color: #555; font-size: 13px; }
 @media (max-width: 600px) {
   .form, .note { align-items: stretch; flex-direction: column; }
   .form button, .note-actions { width: 100%; }
