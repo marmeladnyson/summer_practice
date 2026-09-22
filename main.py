@@ -73,9 +73,9 @@ def update_notes(note_id: str, payload: UpdateNotes, db: Session = Depends(get_d
     note = db.scalars(select(NotesORM).where(NotesORM.id == note_id)).one_or_none()
     if note is None:
         raise HTTPException(status_code=404, detail="Такой заметки не существует")
-    if note.title is not None:
+    if payload.title is not None:
         note.title = payload.title
-    if note.status is not None:
+    if payload.status is not None:
         note.status = payload.status
 
     db.commit()
