@@ -1,11 +1,14 @@
 from contextlib import asynccontextmanager
+import os
+
 from fastapi import FastAPI
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, DeclarativeBase, Session
 
-DATABASE_URL = "postgresql+psycopg2://postgres:admin@localhost:6767/summer_practice_code"
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./notes.db")
+connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(DATABASE_URL, connect_args=connect_args)
 LocalSession = sessionmaker(bind=engine, class_=Session)
 
 class Base(DeclarativeBase):
