@@ -3,60 +3,41 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Notes | Практика</title>
+  <title>Заметки</title>
   <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-  <main class="shell">
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">SUMMER PRACTICE / NOTES API</p>
-        <h1>Мои заметки</h1>
-      </div>
-      <a class="api-link" href="/docs" target="_blank" rel="noreferrer">API docs <span>↗</span></a>
+  <main class="page">
+    <header class="header">
+      <h1>Заметки</h1>
+      <a href="/docs" target="_blank" rel="noreferrer">Swagger</a>
     </header>
 
-    <section class="workspace">
-      <aside class="panel profile-panel">
-        <p class="panel-label">Профиль</p>
-        <h2>Сначала создайте пользователя</h2>
-        <form id="user-form">
-          <label>Email<input id="email" type="email" placeholder="you@example.com" required></label>
-          <label>Телефон<input id="phone" type="tel" placeholder="+79990000000" required></label>
-          <button type="submit">Создать пользователя</button>
-        </form>
-        <p id="user-state" class="muted">Пользователь не выбран</p>
-      </aside>
+    <section class="user-section">
+      <h2>Пользователь</h2>
+      <p id="user-state" class="muted">Пользователь не выбран</p>
+      <form id="user-form" class="form user-form">
+        <label>Email<input id="email" type="email" placeholder="user@example.com" required></label>
+        <label>Телефон<input id="phone" type="tel" placeholder="+79990000000" required></label>
+        <button type="submit">Создать пользователя</button>
+      </form>
+    </section>
 
-      <section class="content">
-        <div class="panel create-panel">
-          <div class="panel-heading">
-            <div>
-              <p class="panel-label">Новая запись</p>
-              <h2>Что нужно сделать?</h2>
-            </div>
-            <span class="count" id="count">0</span>
-          </div>
-          <form id="note-form" class="note-form">
-            <input id="title" type="text" placeholder="Например, подготовить отчет" maxlength="200" required>
-            <button type="submit">Добавить</button>
-          </form>
-        </div>
-
-        <div class="list-heading">
-          <div>
-            <p class="panel-label">Ваш список</p>
-            <h2>Заметки</h2>
-          </div>
-          <select id="filter" aria-label="Фильтр заметок">
-            <option value="">Все</option>
-            <option value="false">Активные</option>
-            <option value="true">Выполненные</option>
-          </select>
-        </div>
-        <div id="message" class="message" role="status"></div>
-        <div id="notes" class="notes"></div>
-      </section>
+    <section class="notes-section">
+      <div class="section-header">
+        <h2>Заметки <span id="count">0</span></h2>
+        <select id="filter" aria-label="Фильтр заметок">
+          <option value="">Все</option>
+          <option value="false">Активные</option>
+          <option value="true">Выполненные</option>
+        </select>
+      </div>
+      <form id="note-form" class="form note-form">
+        <label>Новая заметка<input id="title" type="text" placeholder="Текст заметки" maxlength="200" required></label>
+        <button type="submit">Добавить</button>
+      </form>
+      <div id="message" class="message" role="status"></div>
+      <div id="notes" class="notes"></div>
     </section>
   </main>
   <script src="/static/app.js"></script>
