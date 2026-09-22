@@ -13,6 +13,7 @@ REST API для управления заметками и пользовате�
 - единый JSON-формат прикладных ошибок;
 - асинхронный учебный обработчик HTTP-ошибок в `app/log_parser.py`;
 - автоматические тесты API через pytest.
+- встроенный web-интерфейс для работы без Swagger.
 
 Отчет по практике: [PRACTICE_REPORT.md](PRACTICE_REPORT.md).
 Примеры SQL: [docs/SQL_EXAMPLES.md](docs/SQL_EXAMPLES.md).
@@ -40,6 +41,7 @@ $env:CORS_ORIGINS = "http://localhost:3000,http://localhost:5173"
 ```
 
 Документация API доступна по адресу `http://127.0.0.1:8080/docs`.
+Web-интерфейс доступен по адресу `http://127.0.0.1:8080/`.
 
 ### PostgreSQL через Docker Compose
 

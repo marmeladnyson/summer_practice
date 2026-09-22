@@ -1,8 +1,11 @@
 
 import os
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.database import lifespan
 from app.errors import AppError, app_error_handler
@@ -21,8 +24,9 @@ app.add_middleware(
 
 app.include_router(notes.router)
 app.include_router(users.router)
+app.mount("/static", StaticFiles(directory=Path(__file__).parent / "static"), name="static")
 
 
 @app.get("/")
-def lobby() -> str:
-    return "Добро пожаловать в API заметок!"
+def lobby() -> RedirectResponse:
+    return RedirectResponse(url="/static/index.html")
